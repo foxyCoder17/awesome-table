@@ -1,3 +1,4 @@
+// table component
 import React, { Component } from 'react';
 import './table.scss';
 
