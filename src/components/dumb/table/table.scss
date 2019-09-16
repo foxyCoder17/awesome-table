@@ -1,0 +1,28 @@
+.table {
+  &-title {
+    font-size: 32px;
+  }
+  &-header {
+    display: flex;
+    height: 40px;
+    align-items: center;
+    &-cell {
+      flex-direction: row;
+      flex: 1 1;
+      text-align: center;
+    }
+  }
+
+  &-body {
+    &-row {
+      display: flex;
+
+      &-cell {
+        flex: 1 1;
+        border: 1px solid black;
+        text-align: center;
+      }
+    }
+
+  }
+}
