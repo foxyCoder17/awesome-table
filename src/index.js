@@ -7,13 +7,17 @@ import { Provider } from 'react-redux';
 
 
 const initialState = {
-  data: []
+  data: {
+    filters: [],
+    rows: []
+  }
 };
 
 function reducer(state = initialState, action) {
   switch (action.type) {
     case "UpdateTeachersList":
-      return { ...state, data: action.list };
+      console.log(action.data);
+      return { ...state, data: action.data };
 
     default:
       return state;

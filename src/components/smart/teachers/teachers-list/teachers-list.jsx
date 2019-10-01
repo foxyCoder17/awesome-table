@@ -11,26 +11,39 @@ class TeachersList extends Component {
     openModal: false
   }
   componentDidMount() {
-    this.props.updateTableList([
+    this.props.updateTableList(
       {
-        "Id": 1,
-        "Name": "Foo",
-        "Age": "20",
-        "Subject": "he"
-      },
-      {
-        "Id": 2,
-        "Name": "Bar",
-        "Age": "30",
-        "Subject": "H"
-      },
-      {
-        "Id": 3,
-        "Name": "Baz",
-        "Age": "40",
-        "Subject": "he"
-      }
-    ]);
+        'filters': [
+          {
+            "col": "Id",
+            "type": "text"
+          },
+          {
+            "col": "Name",
+            "type": "text"
+          }
+        ],
+        'rows': [
+          {
+            "Id": 1,
+            "Name": "Foo",
+            "Age": "20",
+            "Subject": "he"
+          },
+          {
+            "Id": 2,
+            "Name": "Bar",
+            "Age": "30",
+            "Subject": "H"
+          },
+          {
+            "Id": 3,
+            "Name": "Baz",
+            "Age": "40",
+            "Subject": "he"
+          }
+        ]
+      });
   }
 
   render() {
@@ -45,7 +58,7 @@ class TeachersList extends Component {
               headerColor="#ff80ab" />
           </div>
           <div className="teachers-list-button">
-            <Button onClick={this.openModal}/>
+            <Button onClick={this.openModal} />
           </div>
           <div id="modal" className="teachers-list-modal" onClick={this.closeModal}>
             <Modal openModal={this.state.openModal}>Add record</Modal>
@@ -76,7 +89,7 @@ class TeachersList extends Component {
 const mapStateToProps = state => state;
 
 const mapDispatchToProps = dispatch => ({
-  updateTableList: list => dispatch({ type: 'UpdateTeachersList', list })
+  updateTableList: data => dispatch({ type: 'UpdateTeachersList', data })
 });
 
 

@@ -12,7 +12,7 @@ class Table extends Component {
   }
 
   componentDidMount() {
-    const keys = this.getColumnNames(this.props.data);
+    const keys = this.getColumnNames(this.props.data.rows);
     this.setState({
       headerKeys: [...keys]
     });
@@ -20,23 +20,27 @@ class Table extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.data !== nextProps.data) {
-      const keys = this.getColumnNames(nextProps.data);
+      console.log(this.props);
+      const keys = this.getColumnNames(nextProps.data.rows);
       this.setState({
-        headerKeys: [...keys]
+        headerKeys: [...keys],
+        filters: this.getFilterRow(nextProps.data.filters, keys.length)
       });
+      console.log(this.state);
     }
   }
 
   render() {
+
+    console.log(this.props.data);
     return (
       <>
         <div className="table">
-          <div className = "table-title">
+          <div className="table-title">
             {this.props.title}
           </div>
-          <div 
-            className="table-header"
-            style={{'backgroundColor' : this.props.headerColor}}>
+          <div className="table-header"
+            style={{ 'backgroundColor': this.props.headerColor }}>
             {
               this.state.headerKeys.map((item, i) =>
                 <div key={i} className="table-header-cell">
@@ -44,9 +48,20 @@ class Table extends Component {
                 </div>)
             }
           </div>
+          <div className="table-filters">
+            {/* <input type="text"></input> */}
+            <div className="table-body-row">
+              {
+                this.state.filters && this.state.filters.map((filter, i) =>
+                  <div key={i} className="table-body-row-cell">
+                    {this.getFilterElement(filter['type'])}
+                  </div>)
+              }
+            </div>
+          </div>
           <div className="table-body">
             {
-              this.props.data.map((item, i) =>
+              this.props.data.rows.map((item, i) =>
                 <div key={i} className="table-body-row">
                   {
                     this.state.headerKeys.map((key, j) =>
@@ -63,9 +78,9 @@ class Table extends Component {
     );
   }
 
-  getColumnNames(data) {
+  getColumnNames(rows) {
     let keys = [];
-    data.forEach(element => {
+    rows.forEach(element => {
       Object.keys(element).forEach(key => {
         if (!keys.includes(key)) {
           keys.push(key);
@@ -74,6 +89,32 @@ class Table extends Component {
     });
     return keys;
   }
+
+  getFilterRow(rows, noOfColumns) {
+    console.log('noofcol', noOfColumns);
+    for (var i = 0; i < noOfColumns; i++) {
+      if (!rows[i]) {
+        rows[i] = {}
+      }
+    }
+    console.log(rows);
+    return rows;
+  }
+
+  getFilterElement(type) {
+    switch(type) {
+      case 'text': {
+        return <input placeholder='Text Filter'></input>;
+      }
+      default: {
+        return;
+      }
+    }
+  }
+
+
+
+
 }
 
 export default Table;
